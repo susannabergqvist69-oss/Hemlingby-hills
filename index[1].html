@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hemlingbyhills Triathlon</title>
+  <style>
+    :root {
+      --bg: #060908;
+      --card: #101815;
+      --accent: #3aa76d;
+      --accent-soft: rgba(58, 167, 109, 0.18);
+      --text: #f5f5f5;
+      --muted: #a7b3ac;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #12351f 0, #060908 45%, #020304 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(to bottom, rgba(6,9,8,0.92), rgba(6,9,8,0.75), transparent);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .nav {
+      max-width: 1024px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: radial-gradient(circle at 30% 0, #4fe08f, #103320);
+      box-shadow: 0 0 22px rgba(63, 213, 124, 0.65);
+    }
+    .brand-text {
+      line-height: 1.1;
+    }
+    .brand-title {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 1.2rem;
+      font-size: 0.85rem;
+    }
+    nav a:hover {
+      color: var(--text);
+    }
+
+    .layout {
+      max-width: 1024px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
+      gap: 2.5rem;
+      align-items: center;
+      padding: 3.5rem 0 2.5rem;
+    }
+    @media (max-width: 800px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        padding-top: 2.5rem;
+      }
+    }
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid var(--accent-soft);
+      background: rgba(2,4,3,0.7);
+      color: var(--muted);
+      font-size: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .hero-kicker span {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(58,167,109,0.7);
+    }
+    .hero h1 {
+      font-size: clamp(2.3rem, 4vw, 3rem);
+      line-height: 1.05;
+      margin-bottom: 0.75rem;
+    }
+    .hero h1 span {
+      color: var(--accent);
+    }
+    .hero-sub {
+      font-size: 0.98rem;
+      color: var(--muted);
+      max-width: 32rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+    }
+    .btn-primary,
+    .btn-ghost {
+      padding: 0.6rem 1.1rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #3aa76d, #4fe08f);
+      color: #041007;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(63, 213, 124, 0.45);
+    }
+    .btn-primary:hover {
+      filter: brightness(1.05);
+    }
+    .btn-ghost {
+      border-color: rgba(255,255,255,0.12);
+      color: var(--muted);
+      background: rgba(6,9,8,0.9);
+    }
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.25);
+      color: var(--text);
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .hero-meta div span {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .hero-card {
+      border-radius: 20px;
+      background: radial-gradient(circle at 0 0, rgba(63,213,124,0.14), transparent 55%),
+                  radial-gradient(circle at 100% 0, rgba(67, 111, 255, 0.12), transparent 55%),
+                  var(--card);
+      padding: 1.4rem 1.4rem 1.6rem;
+      border: 1px solid rgba(255,255,255,0.04);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.75);
+    }
+    .hero-card h2 {
+      font-size: 1.05rem;
+      margin-bottom: 0.4rem;
+    }
+    .hero-card p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 1.2rem;
+    }
+    .pill {
+      font-size: 0.7rem;
+      border-radius: 999px;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--muted);
+      background: rgba(0,0,0,0.35);
+    }
+    .tri-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.6rem;
+      margin-bottom: 1.2rem;
+    }
+    .tri-item {
+      background: rgba(3,6,5,0.85);
+      border-radius: 12px;
+      padding: 0.6rem;
+      font-size: 0.75rem;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .tri-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+    .tri-value {
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .section {
+      margin-top: 2.5rem;
+      border-radius: 18px;
+      background: rgba(6,9,8,0.9);
+      border: 1px solid rgba(255,255,255,0.03);
+      padding: 1.5rem 1.4rem 1.7rem;
+    }
+    .section h2 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    .section p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+    }
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.2rem;
+      font-size: 0.85rem;
+    }
+    @media (max-width: 800px) {
+      .section-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+    .section-card {
+      background: radial-gradient(circle at 0 0, rgba(58,167,109,0.12), transparent 60%);
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 0.9rem;
+    }
+    .section-card h3 {
+      font-size: 0.95rem;
+      margin-bottom: 0.3rem;
+    }
+    .section-card p {
+      font-size: 0.82rem;
+      margin-bottom: 0;
+    }
+
+    .contact {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.5fr);
+      gap: 1.5rem;
+    }
+    @media (max-width: 800px) {
+      .contact {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+    .contact-list {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .contact-list p {
+      margin-bottom: 0.35rem;
+    }
+    .contact-list strong {
+      color: var(--text);
+    }
+    .contact-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.7rem;
+    }
+    .contact-form {
+      font-size: 0.85rem;
+    }
+    .form-row {
+      margin-bottom: 0.65rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    label {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    input, textarea {
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(2,4,3,0.9);
+      color: var(--text);
+      padding: 0.55rem 0.7rem;
+      font-family: inherit;
+      font-size: 0.85rem;
+    }
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+    footer {
+      padding: 2rem 1.5rem 2.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <div class="brand">
+        <div class="brand-mark">HH</div>
+        <div class="brand-text">
+          <div class="brand-title">Hemlingbyhills Triathlon</div>
+          <div class="brand-sub">Gävle · Endurance in the hills</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#om">Om</a>
+        <a href="#profil">Profil</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="hero" id="om">
+      <div>
+        <div class="hero-kicker"><span></span> Personligt varumärke & ideell klubb</div>
+        <h1>Hemlingbyhills <span>Triathlon</span></h1>
+        <p class="hero-sub">
+          Ett eget endurance-varumärke rotat i Hemlingbybackarna i Gävle. Fokus på
+          strukturerad, hållbar träning i simning, cykling och löpning – på dina villkor.
+        </p>
+        <div class="hero-actions">
+          <a href="#kontakt" class="btn-primary">Kontakta mig</a>
+          <a href="#profil" class="btn-ghost">Läs mer om inriktningen</a>
+        </div>
+        <div class="hero-meta">
+          <div>
+            <span>Hemort</span>
+            Gävle · Hemlingby
+          </div>
+          <div>
+            <span>Fokus</span>
+            Individuell triathlonträning & anläggningsbokning
+          </div>
+          <div>
+            <span>Discipliner</span>
+            Simning · Cykling · Löpning
+          </div>
+        </div>
+      </div>
+
+      <aside class="hero-card">
+        <h2>Vad är Hemlingbyhills Triathlon?</h2>
+        <p>
+          En liten, flexibel triathlonklubb och ett personligt varumärke, skapad för att kunna
+          boka banor, tävla under eget namn och ha en tydlig identitet i endurance-världen.
+        </p>
+        <div class="pill-row">
+          <div class="pill">Individuell träning</div>
+          <div class="pill">Backar & natur</div>
+          <div class="pill">Triathlonfokus</div>
+          <div class="pill">Gävle · Hemlingby</div>
+        </div>
+        <div class="tri-grid">
+          <div class="tri-item">
+            <div class="tri-label">Simning</div>
+            <div class="tri-value">Badhus & öppet vatten</div>
+          </div>
+          <div class="tri-item">
+            <div class="tri-label">Cykel</div>
+            <div class="tri-value">Backar, distans, brick</div>
+          </div>
+          <div class="tri-item">
+            <div class="tri-label">Löpning</div>
+            <div class="tri-value">Trails & intervaller</div>
+          </div>
+        </div>
+        <p style="font-size:0.78rem; color:var(--muted);">
+          Klubbformen finns främst för att kunna samarbeta med kommunen, boka anläggningar och
+          ha en tydlig plattform för framtida satsningar.
+        </p>
+      </aside>
+    </section>
+
+    <section class="section" id="profil">
+      <h2>Inriktning & träningsfilosofi</h2>
+      <p>
+        Hemlingbyhills Triathlon handlar om att bygga uthållighet lager för lager. Inte
+        quick-fix, utan långsiktig kapacitet – med respekt för livet runt omkring: jobb,
+        återhämtning och hälsa.
+      </p>
+      <p>
+        Basen ligger i Hemlingby friluftsområde: backarna, skogen, vinterns mörkerpass och
+        sommarens sim i närliggande vatten. Namnet är en påminnelse om att varje backe du tar
+        dig uppför gör dig lite starkare.
+      </p>
+      <div class="section-grid">
+        <article class="section-card">
+          <h3>Triathlon som ram</h3>
+          <p>
+            Simning, cykling och löpning används som byggstenar. Fokus ligger på struktur och
+            kontinuitet, snarare än på att jaga enstaka pass.
+          </p>
+        </article>
+        <article class="section-card">
+          <h3>Hemlingby som bas</h3>
+          <p>
+            Kuperad terräng, elljusspår, backar och närhet till badhus gör området perfekt som
+            "hemmabana" för långsiktig utveckling.
+          </p>
+        </article>
+        <article class="section-card">
+          <h3>Låg administration</h3>
+          <p>
+            Föreningsdelen hålls medvetet enkel: nödvändigt för bokningar, försäkring och
+            tävlingsanmälan – men utan krav på stora medlemsaktiviteter.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="kontakt">
+      <h2>Kontakt</h2>
+      <div class="contact">
+        <div class="contact-list">
+          <p><strong>Hemlingbyhills Triathlon</strong></p>
+          <p>Hemort: Gävle · Hemlingby</p>
+          <p>E-post: <strong>info@hemlingbyhills.se</strong> (förslag)</p>
+          <p>Instagram: <strong>@hemlingbyhills</strong> (förslag)</p>
+          <p class="contact-note">
+            Uppdatera e-post, sociala medier och ev. organisationsnummer här när allt är
+            registrerat.
+          </p>
+        </div>
+        <div class="contact-form">
+          <p>
+            Här kan du lägga in ett enkelt kontaktformulär om du senare kopplar sidan till ett
+            formulärverktyg (t.ex. via din webbhost eller ett formulärtjänst).
+          </p>
+          <div class="form-row">
+            <label for="namn">Namn</label>
+            <input id="namn" type="text" placeholder="Ditt namn" />
+          </div>
+          <div class="form-row">
+            <label for="epost">E-post</label>
+            <input id="epost" type="email" placeholder="din@mail.se" />
+          </div>
+          <div class="form-row">
+            <label for="meddelande">Meddelande</label>
+            <textarea id="meddelande" placeholder="Skriv ett kort meddelande..."></textarea>
+          </div>
+          <button class="btn-primary" type="button">Skicka (ej aktiv ännu)</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Hemlingbyhills Triathlon · Byggd för personlig utveckling, inte massverksamhet.
+  </footer>
+</body>
+</html>
